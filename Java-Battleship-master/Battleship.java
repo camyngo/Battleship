@@ -217,7 +217,7 @@ public class Battleship
         }
     }
     
-    private static boolean hasErrors(int row, int col, int dir, Player p, int count)
+    public static boolean hasErrors(int row, int col, int dir, Player p, int count)
     {
         //System.out.println("DEBUG: count arg is " + count);
         
@@ -278,7 +278,7 @@ public class Battleship
         return false;
     }
     
-    private static boolean hasErrorsComp(int row, int col, int dir, Player p, int count)
+    public static boolean hasErrorsComp(int row, int col, int dir, Player p, int count)
     {
         //System.out.println("DEBUG: count arg is " + count);
         
@@ -337,7 +337,7 @@ public class Battleship
 
 
     /*HELPER METHODS*/
-    private static int convertLetterToInt(String val)
+    public static int convertLetterToInt(String val)
     {
         int toReturn = -1;
         switch (val)
@@ -369,7 +369,7 @@ public class Battleship
         return toReturn;
     }
     
-    private static String convertIntToLetter(int val)
+    public static String convertIntToLetter(int val)
     {
         String toReturn = "Z";
         switch (val)
@@ -401,7 +401,7 @@ public class Battleship
         return toReturn;
     }
     
-    private static int convertUserColToProCol(int val)
+    public static int convertUserColToProCol(int val)
     {
         int toReturn = -1;
         switch (val)
@@ -433,7 +433,7 @@ public class Battleship
         return toReturn;
     }
     
-    private static int convertCompColToRegular(int val)
+    public static int convertCompColToRegular(int val)
     {
         int toReturn = -1;
         switch (val)
