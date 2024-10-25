@@ -1,0 +1,37 @@
+This text file captures the resources used to set up a CI server.
+
+Create AWS EC2 micro instance
+https://aws.amazon.com/ec2/
+https://aws.amazon.com/getting-started/projects/setup-jenkins-build-server/
+
+Installing Jenkins
+https://pkg.jenkins.io/redhat-stable/
+https://linuxize.com/post/how-to-install-jenkins-on-centos-7/
+
+Installing Git
+https://www.slideshare.net/devopsjourney/setting-up-git-on-aws-ec2
+"sudo yum install git"
+
+Installing sendmail (optional?)
+"sudo yum install sendmail"
+
+Installing mailx (for mail utility)
+"sudo yum install mailx"
+Configure per: https://coderwall.com/p/ez1x2w/send-mail-like-a-boss
+* Allow "less secure" apps to login to Gmail
+
+Setting up Jenkins
+https://aws.amazon.com/getting-started/projects/setup-jenkins-build-server/
+https://d1.awsstatic.com/Projects/P5505030/aws-project_Jenkins-build-server.pdf
+
+Install the standard/recommended Jenkins plugins
+
+Create a Jenkins project per this video:
+https://www.youtube.com/watch?v=Z3S2gMBUkBo
+
+Additional plugins installed:
+Green balls
+AnsiColor
+
+Integrating GitHub into Jenkins:
+https://www.youtube.com/watch?v=Z3S2gMBUkBo
