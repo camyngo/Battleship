@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import static org.mockito.Mockito.*;
+
+import static org.mockito.Mockito.mock;
 
 public class PlayerTest{
     private Player player;
