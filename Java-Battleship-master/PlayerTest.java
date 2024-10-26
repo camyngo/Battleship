@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class PlayerTest{
@@ -149,5 +150,18 @@ public class PlayerTest{
 
         // Call numOfShipsLeft()
         assertEquals(2, player.numOfShipsLeft(), "3 ships are set, so 2 ships should be left.");
+    }
+
+    // this test is intentionally to catch error
+    @Test
+    public void testNumOfShipsLeft_ThrowsErrorInSetup() throws Exception {
+        player = null;
+        // We expect this test to fail because setUp() will not initialize the player object
+        assertThrows(Exception.class, () -> {
+            player.numOfShipsLeft();  // This will throw a NullPointerException due to player being null
+        });
+        // reset everything
+        tearDown();
+        setUp();
     }
 }
