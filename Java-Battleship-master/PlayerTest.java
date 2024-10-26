@@ -33,9 +33,8 @@ public class PlayerTest{
 
             // Inject mocked Ships (as if they were initialized with different lengths)
             player.ships = new Ship[]{mockShip1, mockShip2, mockShip3, mockShip4, mockShip5};
+            setAllShipsLocationAndDirection();
 
-            // Call the helper method to set all ships as "set"
-            setAllShipsLocationAndDirection() ;
 
 
         } catch (Exception e) {
@@ -98,7 +97,7 @@ public class PlayerTest{
     // Test to check if all ship has been set
     @Test
     public void testNumOfShipsLeft_AllShipsSet() {
-
+        setAllShipsLocationAndDirection();
         // Since all ships are set, no ships should be left to place
         assertEquals(0, player.numOfShipsLeft(), "All ships are set, so 0 ships should be left.");
     }
@@ -111,18 +110,22 @@ public class PlayerTest{
     }
 
     @Test
-    public void testNumOfShipsLeft_SomeShipsSet() {
+    public void testNumOfShipsLeft_SomeShipsSet() throws Exception {
+        // reset logic for testing purposes
+        tearDown();
+        // set up once again
+        setUp();
+
         // Set the behavior for mockShip1
         mockShip1.setLocation(1, 1);  // Simulate setting the location
         mockShip1.setDirection(0);    // Simulate setting the direction
+        // First, stub the behavior of isLocationSet and isDirectionSet
         when(mockShip1.isLocationSet()).thenReturn(true);
         when(mockShip1.isDirectionSet()).thenReturn(true);
 
         // Set the behavior for mockShip2
         mockShip2.setLocation(5, 8);
         mockShip2.setDirection(1);
-        when(mockShip2.isLocationSet()).thenReturn(true);
-        when(mockShip2.isDirectionSet()).thenReturn(true);
 
         // Set the behavior for mockShip3 (location and direction not set)
         when(mockShip3.isLocationSet()).thenReturn(false);
@@ -131,8 +134,6 @@ public class PlayerTest{
         // Set the behavior for mockShip4
         mockShip4.setLocation(3, 3);
         mockShip4.setDirection(2);
-        when(mockShip4.isLocationSet()).thenReturn(true);
-        when(mockShip4.isDirectionSet()).thenReturn(true);
 
         // Set the behavior for mockShip5 (location and direction not set)
         when(mockShip5.isLocationSet()).thenReturn(false);
@@ -148,18 +149,5 @@ public class PlayerTest{
 
         // Call numOfShipsLeft()
         assertEquals(2, player.numOfShipsLeft(), "3 ships are set, so 2 ships should be left.");
-    }
-
-
-    @Test
-    void addShips() {
-    }
-
-    @Test
-    void numOfShipsLeft() {
-    }
-
-    @Test
-    void chooseShipLocation() {
     }
 }
