@@ -12,30 +12,36 @@ public class PlayerTest{
     private static Grid mockPlayerGrid, mockOppGrid;
 
     @BeforeAll
-    static void setUpBeforeClass() throws Exception {
-        // Mock the Ship and Grid classes for testing
-        mockShip1 = mock(Ship.class);
-        mockShip2 = mock(Ship.class);
-        mockShip3 = mock(Ship.class);
-        mockShip4 = mock(Ship.class);
-        mockShip5 = mock(Ship.class);
+    static void setUp() throws Exception {
+        try{
+            // Mock the Ship and Grid classes for testing
+            mockShip1 = mock(Ship.class);
+            mockShip2 = mock(Ship.class);
+            mockShip3 = mock(Ship.class);
+            mockShip4 = mock(Ship.class);
+            mockShip5 = mock(Ship.class);
 
-        mockPlayerGrid = mock(Grid.class);
-        mockOppGrid = mock(Grid.class);
+            mockPlayerGrid = mock(Grid.class);
+            mockOppGrid = mock(Grid.class);
 
-        // Initialize the player object
-        player = new Player();
+            // Initialize the player object
+            player = new Player();
 
-        // Inject mocked Grids for testing purposes
-        player.playerGrid = mockPlayerGrid;
-        player.oppGrid = mockOppGrid;
+            // Inject mocked Grids for testing purposes
+            player.playerGrid = mockPlayerGrid;
+            player.oppGrid = mockOppGrid;
 
-        // Inject mocked Ships (as if they were initialized with different lengths)
-        player.ships = new Ship[]{mockShip1, mockShip2, mockShip3, mockShip4, mockShip5};
+            // Inject mocked Ships (as if they were initialized with different lengths)
+            player.ships = new Ship[]{mockShip1, mockShip2, mockShip3, mockShip4, mockShip5};
 
-        // Call the helper method to set all ships as "set"
-        setAllShipsLocationAndDirection() ;
+            // Call the helper method to set all ships as "set"
+            setAllShipsLocationAndDirection() ;
 
+
+        } catch (Exception e) {
+            // If there's an issue, throw an exception that will prevent the tests from running
+            throw new Exception("Setup failed: " + e.getMessage(), e);
+        }
     }
 
     // Helper method to set all ships with location and direction
@@ -54,7 +60,12 @@ public class PlayerTest{
 
     @AfterAll
     static void tearDown() throws Exception {
+        try{
 
+        } catch (Exception e) {
+            // If there's an issue, throw an exception that will prevent the tests from running
+            throw new Exception("TearDown failed: " + e.getMessage(), e);
+        }
     }
 
     @Test
