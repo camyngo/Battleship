@@ -1,10 +1,10 @@
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PlayerTest{
     private static Player player;
@@ -58,10 +58,29 @@ public class PlayerTest{
         when(mockShip5.isDirectionSet()).thenReturn(true);
     }
 
+    private static void testNumOfShipsLeft_NoShipsSet() {
+        // Simulate no ships having location or direction set
+        when(mockShip1.isLocationSet()).thenReturn(false);
+        when(mockShip1.isDirectionSet()).thenReturn(false);
+        when(mockShip2.isLocationSet()).thenReturn(false);
+        when(mockShip2.isDirectionSet()).thenReturn(false);
+        when(mockShip3.isLocationSet()).thenReturn(false);
+        when(mockShip3.isDirectionSet()).thenReturn(false);
+        when(mockShip4.isLocationSet()).thenReturn(false);
+        when(mockShip4.isDirectionSet()).thenReturn(false);
+        when(mockShip5.isLocationSet()).thenReturn(false);
+        when(mockShip5.isDirectionSet()).thenReturn(false);
+    }
+
+
     @AfterAll
     static void tearDown() throws Exception {
         try{
-
+            // Nullify all objects to release memory and clean up resources
+            player = new Player();;
+            mockPlayerGrid = new Grid();
+            mockOppGrid = new Grid();
+            testNumOfShipsLeft_NoShipsSet();
         } catch (Exception e) {
             // If there's an issue, throw an exception that will prevent the tests from running
             throw new Exception("TearDown failed: " + e.getMessage(), e);
@@ -79,14 +98,68 @@ public class PlayerTest{
     // Test to check if all ship has been set
     @Test
     public void testNumOfShipsLeft_AllShipsSet() {
+
         // Since all ships are set, no ships should be left to place
         assertEquals(0, player.numOfShipsLeft(), "All ships are set, so 0 ships should be left.");
     }
 
+    // Test to check if all ship has not been set
     @Test
-    public void testNumOfShipsLeft_NoShipsSet(){
+    public void testNoShipsSet() throws Exception {
+        tearDown();
+        assertEquals(5,player.numOfShipsLeft(),"No ships are set, so return all ships." );
+    }
 
+    @Test
+    public void testNumOfShipsLeft_SomeShipsSet() {
+        // Set the behavior for mockShip1
+        mockShip1.setLocation(1, 1);  // Simulate setting the location
+        mockShip1.setDirection(0);    // Simulate setting the direction
+        when(mockShip1.isLocationSet()).thenReturn(true);
+        when(mockShip1.isDirectionSet()).thenReturn(true);
+
+        // Set the behavior for mockShip2
+        mockShip2.setLocation(5, 8);
+        mockShip2.setDirection(1);
+        when(mockShip2.isLocationSet()).thenReturn(true);
+        when(mockShip2.isDirectionSet()).thenReturn(true);
+
+        // Set the behavior for mockShip3 (location and direction not set)
+        when(mockShip3.isLocationSet()).thenReturn(false);
+        when(mockShip3.isDirectionSet()).thenReturn(false);
+
+        // Set the behavior for mockShip4
+        mockShip4.setLocation(3, 3);
+        mockShip4.setDirection(2);
+        when(mockShip4.isLocationSet()).thenReturn(true);
+        when(mockShip4.isDirectionSet()).thenReturn(true);
+
+        // Set the behavior for mockShip5 (location and direction not set)
+        when(mockShip5.isLocationSet()).thenReturn(false);
+        when(mockShip5.isDirectionSet()).thenReturn(false);
+
+        // Verify that the setters were called
+        verify(mockShip1).setLocation(1, 1);
+        verify(mockShip1).setDirection(0);
+        verify(mockShip2).setLocation(5, 8);
+        verify(mockShip2).setDirection(1);
+        verify(mockShip4).setLocation(3, 3);
+        verify(mockShip4).setDirection(2);
+
+        // Call numOfShipsLeft()
+        assertEquals(2, player.numOfShipsLeft(), "3 ships are set, so 2 ships should be left.");
     }
 
 
+    @Test
+    void addShips() {
+    }
+
+    @Test
+    void numOfShipsLeft() {
+    }
+
+    @Test
+    void chooseShipLocation() {
+    }
 }
