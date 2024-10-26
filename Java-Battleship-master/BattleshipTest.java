@@ -1,7 +1,65 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Scanner;
 
 public class BattleshipTest {
+
+    @Test
+    public void testAskForGuess_Hit() {
+        // Arrange
+        Player userPlayer = new Player();
+        Player opponent = new Player();
+
+        // Place a ship at a known location on the opponent's grid (for testing a hit)
+        opponent.playerGrid.setShip(4, 5, true); // Place a ship at (4,5) which is "E6"
+
+        // Simulate user input for the guess: "E" for row, "6" for column
+        String simulatedInput = "E\n6\n";
+        InputStream originalIn = System.in;
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        // Ensure Scanner reads from the new InputStream
+        Battleship.reader = new Scanner(System.in);  // Reset the scanner to read from the simulated input
+
+        // Act
+        String result = Battleship.askForGuess(userPlayer, opponent);
+
+        // Assert
+        assertEquals("** USER HIT AT E6 **", result, "Expected a hit at E6");
+
+        // Cleanup
+        System.setIn(originalIn); // Restore the original System.in
+    }
+
+    @Test
+    public void testAskForGuess_Miss() {
+        // Arrange
+        Player userPlayer = new Player();
+        Player opponent = new Player();
+
+        // Ensure no ship is present at (2, 3) for testing a miss
+        // "C4" is the input: row "C" and column "4"
+        String simulatedInput = "C\n4\n";
+        InputStream originalIn = System.in;
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        // Ensure Scanner reads from the new InputStream
+        Battleship.reader = new Scanner(System.in);  // Reset the scanner to read from the simulated input
+
+        // Act
+        String result = Battleship.askForGuess(userPlayer, opponent);
+
+        // Assert
+        assertEquals("** USER MISS AT C4 **", result, "Expected a miss at C4");
+
+        // Cleanup
+        System.setIn(originalIn); // Restore the original System.in
+    }
+
+
+
 
     @Test
     public void testConvertLetterToInt() {

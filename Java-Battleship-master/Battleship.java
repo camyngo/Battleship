@@ -45,7 +45,7 @@ public class Battleship
         }
     }
     
-    private static void compMakeGuess(Player comp, Player user)
+    public static void compMakeGuess(Player comp, Player user)
     {
         Randomizer rand = new Randomizer();
         int row = rand.nextInt(0, 9);
@@ -79,17 +79,17 @@ public class Battleship
         reader.nextLine();
     }
 
-    private static String askForGuess(Player p, Player opp)
+    public static String askForGuess(Player p, Player opp)
     {
         System.out.println("Viewing My Guesses:");
         p.oppGrid.printStatus();
-        
+
         int row = -1;
         int col = -1;
-        
+
         String oldRow = "Z";
         int oldCol = -1;
-        
+
         while(true)
         {
             System.out.print("Type in row (A-J): ");
@@ -97,20 +97,20 @@ public class Battleship
             userInputRow = userInputRow.toUpperCase();
             oldRow = userInputRow;
             row = convertLetterToInt(userInputRow);
-                    
+
             System.out.print("Type in column (1-10): ");
             col = reader.nextInt();
             oldCol = col;
             col = convertUserColToProCol(col);
-                    
+
             //System.out.println("DEBUG: " + row + col);
-                    
+
             if (col >= 0 && col <= 9 && row != -1)
                 break;
-                    
+
             System.out.println("Invalid location!");
         }
-        
+
         if (opp.playerGrid.hasShip(row, col))
         {
             p.oppGrid.markHit(row, col);
@@ -125,7 +125,7 @@ public class Battleship
         }
     }
     
-    private static void setup(Player p)
+    public static void setup(Player p)
     {
         p.playerGrid.printShips();
         System.out.println();
