@@ -3,13 +3,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class PlayerTest{
     private static Player player;
-    private static Ship mockShip1, mockShip2 ,mockShip3, mockShip4, mockShip5;
+    private static Ship mockShip1, mockShip2 ,mockShip3, mockShip4, mockShip5, mockShip6;
     private static Grid mockPlayerGrid, mockOppGrid;
 
     @BeforeAll
@@ -22,21 +23,21 @@ public class PlayerTest{
             mockShip4 = mock(Ship.class);
             mockShip5 = mock(Ship.class);
 
-            mockPlayerGrid = mock(Grid.class);
-            mockOppGrid = mock(Grid.class);
+            mockPlayerGrid = mock(Grid.class); // Ensure player grid is mocked
+            mockOppGrid = mock(Grid.class); // Ensure opponent grid is mocked
 
             // Initialize the player object
             player = new Player();
 
             // Inject mocked Grids for testing purposes
+            // represents the player’s grid where ships are placed.
             player.playerGrid = mockPlayerGrid;
+            // represents the opponent’s grid where the player makes guesses during gameplay.
             player.oppGrid = mockOppGrid;
 
             // Inject mocked Ships (as if they were initialized with different lengths)
             player.ships = new Ship[]{mockShip1, mockShip2, mockShip3, mockShip4, mockShip5};
             setAllShipsLocationAndDirection();
-
-
 
         } catch (Exception e) {
             // If there's an issue, throw an exception that will prevent the tests from running
@@ -150,6 +151,30 @@ public class PlayerTest{
 
         // Call numOfShipsLeft()
         assertEquals(2, player.numOfShipsLeft(), "3 ships are set, so 2 ships should be left.");
+    }
+
+    @Test
+    public void testChooseShipLocation() throws Exception {
+        // Define the row, column, and direction
+        int row = 3;
+        int col = 4;
+        int direction = 1; // Arbitrary direction value
+
+        // Mock behavior: Ensure that isLocationSet() and isDirectionSet() return true
+        when(mockShip1.isLocationSet()).thenReturn(false);
+        when(mockShip1.isDirectionSet()).thenReturn(false);
+
+        // Act: Call the chooseShipLocation method
+        player.chooseShipLocation(mockShip1, row, col, direction);
+
+        // Verify that setLocation() was called on the Ship object with the correct row and column
+        verify(mockShip6).setLocation(row, col);
+
+        // Verify that setDirection() was called on the Ship object with the correct direction
+        verify(mockShip6).setDirection(direction);
+
+        // Verify that the ship was added to the player's grid (mockPlayerGrid, which is mocked)
+        verify(mockPlayerGrid).addShip(mockShip6);  // Ensure mockPlayerGrid is used
     }
 
     // this test is intentionally to catch error
