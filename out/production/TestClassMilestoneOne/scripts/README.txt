@@ -56,3 +56,54 @@ drwxr-x---. 7 user user      4096 Apr  1 20:51 jdk1.8.0_211
 6. Create symlinks to java and javac [optional]
 One can use the "ln -s" command to create symbolic links for "java" and "javac"
 found in $PATH to point to your new installation.
+
+7. Need to run "org.mockito:mockito-core:5.14.2" (use to import mockito since i used mocking)
+
+
+Section 2: TEST CLASSES EXPLAINATION
+
+1. PlayerTest - Unit Testing for Player Class
+
+This class contains a suite of unit tests to verify the functionality of the Player class in a Battleship-style game. These tests use JUnit 5 and Mockito for mocking dependencies and verifying behavior.
+
+Setup and Teardown
+
+	•	@BeforeAll: Initializes the mock objects and sets up the Player instance with mocked Ship and Grid objects. This method is run once before all tests.
+	•	@AfterAll: Ensures cleanup after all tests have run by nullifying objects and simulating a reset.
+
+Tests Overview
+
+	1.	testAddShips():
+	•	Verifies that the player’s ships are correctly added to the grid.
+	•	Simulates adding ships using the addShips() method and checks if they are added to the player’s grid.
+	2.	testNumOfShipsLeft_AllShipsSet():
+	•	Verifies that when all ships have their location and direction set, there are no ships left to place.
+	•	Asserts that the number of ships left is 0.
+	3.	testNoShipsSet():
+	•	Simulates a scenario where no ships have their location or direction set.
+	•	Asserts that all 5 ships are left to be placed.
+	4.	testNumOfShipsLeft_SomeShipsSet():
+	•	Tests a mixed scenario where some ships have their location and direction set, and others do not.
+	•	Verifies the numOfShipsLeft() method, asserting the correct number of ships that are yet to be placed.
+	5.	testNumOfShipsLeft_ThrowsErrorInSetup():
+	•	Intentionally sets the Player object to null and verifies that an exception is thrown when attempting to call numOfShipsLeft().
+	•	Useful for checking how the setup handles errors like uninitialized objects.
+
+Helper Methods
+
+	•	setAllShipsLocationAndDirection():
+	•	This helper method stubs the behavior of isLocationSet() and isDirectionSet() for all ships, ensuring that they return true. This simulates a scenario where all ships are properly placed.
+	•	testNumOfShipsLeft_NoShipsSet():
+	•	Another helper method that simulates the case where none of the ships have their location or direction set, ensuring that they return false.
+
+Future Tests
+
+	•	Simulate setting the location and direction of the ships.
+	•	Ensure that ships are added to the player’s grid correctly after location and direction are set.
+
+These are currently commented out but can be implemented once chooseShipLocation() is ready for further validation.
+
+Technologies Used
+
+	•	JUnit 5: For unit testing.
+	•	Mockito: For mocking external dependencies such as Ship and Grid objects.
